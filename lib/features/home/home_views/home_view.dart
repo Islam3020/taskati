@@ -35,9 +35,9 @@ class _HomeViewState extends State<HomeView> {
               const TodayWidget(),
               const Gap(15),
               DatePicker(
-                DateTime.now().subtract(const Duration(days: 3)),
+                DateTime.now().subtract(const Duration(days: 1)),
                 initialSelectedDate:
-                    DateTime.now().subtract(const Duration(days: 6)),
+                    DateTime.now(),
                 width: 70,
                 height: 90,
                 selectionColor: AppColors.primaryColor,
