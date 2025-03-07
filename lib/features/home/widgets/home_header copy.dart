@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:taskati/core/services/local_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
@@ -28,6 +29,8 @@ class _HomeHeaderState extends State<HomeHeader> {
               children: [
                 Text(
                   "hello, ${AppLocalStorage.getCachedData("name")}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: getTitleTextStyle(context,color: AppColors.primaryColor),
                 ),
                 Text(
@@ -37,6 +40,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               ],
             ),
           ),
+          const Gap(20),
           CircleAvatar(
             radius: 24,
             backgroundImage:
