@@ -79,10 +79,12 @@ class _ProfileViewState extends State<ProfileView> {
               const SizedBox(height: 30),
               Row(
                 children: [
-                  Text(
-                    AppLocalStorage.getCachedData(AppLocalStorage.kName)
-                        .toString(),
-                    style: const TextStyle(fontSize: 20),
+                  Expanded(
+                    child: Text(
+                      AppLocalStorage.getCachedData(AppLocalStorage.kName)
+                          .toString(),overflow: TextOverflow.ellipsis,maxLines: 2,
+                      style: const TextStyle(fontSize: 20),
+                    ),
                   ),
                   const Spacer(),
                   InkWell(

@@ -9,7 +9,6 @@ import 'package:taskati/core/utils/text_styles.dart';
 import 'package:taskati/core/widgets/custom_buttons.dart';
 import 'package:taskati/features/home/home_views/home_view.dart';
 
-
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
 
@@ -63,19 +62,21 @@ class _AddTaskState extends State<AddTask> {
                     CustomButton(
                         width: 145,
                         text: "Create Task",
-                        onPressed: () async{
-                          if (formKey.currentState!.validate()){
-                            var key = DateTime.now().toString() + titleController.text;
-                          await  AppLocalStorage.cacheTask(key, 
-                            TaskModel(id: key,
-                              title: titleController.text,
-                              description: descriptionController.text,
-                              date: dateController.text,
-                              startTime: startTimeController.text,
-                              endTime: endTimeController.text,
-                              color: selectedColor,
-                              isCompleted: false)
-                            );
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            var key = DateTime.now().toString() +
+                                titleController.text;
+                            await AppLocalStorage.cacheTask(
+                                key,
+                                TaskModel(
+                                    id: key,
+                                    title: titleController.text,
+                                    description: descriptionController.text,
+                                    date: dateController.text,
+                                    startTime: startTimeController.text,
+                                    endTime: endTimeController.text,
+                                    color: selectedColor,
+                                    isCompleted: false));
                             context.pushTo(const HomeView());
                           }
                         })
@@ -129,7 +130,7 @@ class _AddTaskState extends State<AddTask> {
             children: [
               Text(
                 "start time",
-                style: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+                style: getBodyTextStyle(context, fontWeight: FontWeight.w500),
               ),
               const Gap(10),
               TextFormField(
@@ -139,6 +140,13 @@ class _AddTaskState extends State<AddTask> {
                   var time = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay.now(),
+                    builder: (context, child) {
+                      return  Theme(
+                                    data:AppLocalStorage.getCachedData(AppLocalStorage.isDarkTheme)? ThemeData.dark():ThemeData.light(),
+                                    child: child!,
+                                  );
+                    },
+                  
                   );
                   if (time != null) {
                     startTimeController.text = time.format(context);
@@ -162,7 +170,7 @@ class _AddTaskState extends State<AddTask> {
             children: [
               Text(
                 "end time",
-                style: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+                style: getBodyTextStyle(context, fontWeight: FontWeight.w500),
               ),
               const Gap(10),
               TextFormField(
@@ -172,6 +180,12 @@ class _AddTaskState extends State<AddTask> {
                   var time = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay.now(),
+                    builder: (context, child) {
+                      return  Theme(
+                                    data:AppLocalStorage.getCachedData(AppLocalStorage.isDarkTheme)? ThemeData.dark():ThemeData.light(),
+                                    child: child!,
+                                  );
+                    },
                   );
                   if (time != null) {
                     endTimeController.text = time.format(context);
@@ -198,15 +212,20 @@ class _AddTaskState extends State<AddTask> {
       children: [
         Text(
           "title",
-          style: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+          style: getBodyTextStyle(context, fontWeight: FontWeight.w500),
         ),
         const Gap(10),
-        TextFormField(controller: titleController,
+        TextFormField(
+          controller: titleController,
           decoration: const InputDecoration(
             hintText: "Enter Title",
           ),
           validator: (value) {
-            if (value!.isEmpty) {return "Required";}else{return null;}
+            if (value!.isEmpty) {
+              return "Required";
+            } else {
+              return null;
+            }
           },
         ),
       ],
@@ -219,10 +238,11 @@ class _AddTaskState extends State<AddTask> {
       children: [
         Text(
           "description",
-          style: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+          style: getBodyTextStyle(context, fontWeight: FontWeight.w500),
         ),
         const Gap(10),
-        TextFormField(controller: descriptionController,
+        TextFormField(
+          controller: descriptionController,
           maxLines: 3,
           decoration: const InputDecoration(
             hintText: "Enter Description",
@@ -238,7 +258,7 @@ class _AddTaskState extends State<AddTask> {
       children: [
         Text(
           "date",
-          style: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+          style: getBodyTextStyle(context, fontWeight: FontWeight.w500),
         ),
         const Gap(10),
         TextFormField(
@@ -250,6 +270,13 @@ class _AddTaskState extends State<AddTask> {
               initialDate: DateTime.now(),
               firstDate: DateTime.now(),
               lastDate: DateTime(2040),
+              builder:(context, child){
+                return   Theme(
+                                    data:AppLocalStorage.getCachedData(AppLocalStorage.isDarkTheme)? ThemeData.dark():ThemeData.light(),
+                                    child: child!,
+                                  );
+                
+              }
             );
             if (pickedDate != null) {
               dateController.text = DateFormat("dd/MM/yyyy").format(pickedDate);
@@ -257,7 +284,7 @@ class _AddTaskState extends State<AddTask> {
           },
           decoration: InputDecoration(
             hintText: dateController.text,
-            hintStyle: getBodyTextStyle(context,fontWeight: FontWeight.w500),
+            hintStyle: getBodyTextStyle(context, fontWeight: FontWeight.w500),
             suffixIcon: const Icon(
               Icons.calendar_month_outlined,
               color: AppColors.primaryColor,
