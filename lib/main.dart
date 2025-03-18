@@ -6,6 +6,8 @@ import 'package:taskati/core/utils/themes.dart';
 
 import 'package:taskati/features/splash/splash_view.dart';
 
+import 'features/profile/views/profile_view.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -32,7 +34,7 @@ class MainApp extends StatelessWidget {
           themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
           theme: AppThemes.lightTheme,
           darkTheme:AppThemes.darkTheme,
-          home: const SplashView(),
+          home: const ProfileView(),
         );
       },
     );
